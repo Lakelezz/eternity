@@ -57,9 +57,9 @@ jobs:
         run: cargo build --all-features
 
       - name: Test All Features
-          if: runner.toolchain == 'stable'
-          run: |
-            cargo test --all-features
+        if: runner.toolchain == 'stable'
+        run: |
+          cargo test --all-features
 
   docs:
     name: Build docs
