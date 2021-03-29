@@ -27,18 +27,23 @@ features = ["time", "sync"]
 version = "0.2"
 optional = true
 
-[dev-dependencies.tokio]
+[build-dependencies]
+skeptic = "0.13"
+
+[build-dependencies.tokio]
 default-features = false
 features = ["macros", "rt", "rt-multi-thread"]
 version = "1"
-
-[build-dependencies]
-skeptic = "0.13"
 
 [dev-dependencies]
 skeptic = "0.13"
 strum = "0.20"
 strum_macros = "0.20"
+
+[dev-dependencies.tokio]
+default-features = false
+features = ["macros", "rt", "rt-multi-thread"]
+version = "1"
 
 [features]
 default = ["tokio", "cache"]
