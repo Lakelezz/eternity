@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="A multi-bucket type uses groups of buckets. Each group represents a category, e.g. a command name or HTTP endpoint, which then contains buckets. The buckets represent individual identities, such as the command user’s ID or the endpoint parameters."><meta name="keywords" content="rust, rustlang, rust-lang, multi_bucket"><title>eternity::multi_bucket - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../eternity/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><p class="location">Module multi_bucket</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li></ul></div><p class="location"><a href="../index.html">eternity</a></p><div id="sidebar-vars" data-name="multi_bucket" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">eternity</a>::<wbr><a class="mod" href="">multi_bucket</a></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/eternity/multi_bucket.rs.html#1-819" title="goto source code">[src]</a></span></h1><div class="docblock"><p>A multi-bucket type uses groups of buckets. Each group represents
+a category, e.g. a command name or HTTP endpoint, which then contains
+buckets. The buckets represent individual identities, such as the command
+user’s ID or the endpoint parameters.</p>
+<h1 id="group-and-bucket-keys" class="section-header"><a href="#group-and-bucket-keys">Group and Bucket Keys</a></h1>
+<p>The group key accesses a bucket group and the bucket key accesses the
+actual bucket instance containing the rate limit data within a group.</p>
+<h1 id="limit-behaviour" class="section-header"><a href="#limit-behaviour">Limit Behaviour</a></h1>
+<p>Buckets are locked when accessed. Once a rate limit occurs, other
+attempts on locking the bucket will await until the bucket is free again.</p>
+<h1 id="generics" class="section-header"><a href="#generics">Generics</a></h1>
+<p>When defining your multi-bucket type, the first generic you set is the
+group key. It decides the category of dispatch, e.g. a specific
+bot command. <br>
+The second generic you specify picks a rate limit measuering instance.
+Therefore, if you want a global rate limit, you simply use <code>None</code> as
+bucket key but when you want it to be limited per user, you provide the
+user ID. <br>
+Last but not least, when the <code>cache</code>-feature is enabled, you can pass
+the optional third generic to decide what type of value you want to cache.</p>
+<h1 id="usage" class="section-header"><a href="#usage">Usage</a></h1>
+<p>The recommended way of adding buckets to a multi-bucket is by calling
+<code>build_group</code> on them. This returns a convenient builder API.</p>
+<p>The other option is to implement the <a href="../../eternity/multi_bucket/trait.ToBucket.html"><code>ToBucket</code></a>-trait and call
+<code>insert_group</code> for each group. This can be useful if you want to dynamically
+add new groups and adjust the bucket values based on its key’s properties.
+E.g. if the key has a field named <code>property</code> and it has a special
+value, the bucket could have a different rate limit process.</p>
+<p>You may also construct the bucket manually and insert it via
+<code>insert_bucket</code>. However <code>build_group</code> will do this for you already.</p>
+</div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.CachedLimitedEnums.html" title="eternity::multi_bucket::CachedLimitedEnums struct">CachedLimitedEnums</a></td><td class="docblock-short"><p>Disclaimer:</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CachedLimitedEnumsModifier.html" title="eternity::multi_bucket::CachedLimitedEnumsModifier struct">CachedLimitedEnumsModifier</a></td><td class="docblock-short"><p>This builder takes ownership of <a href="../../eternity/multi_bucket/struct.CachedLimitedEnums.html"><code>CachedLimitedEnums</code></a> and allows to add
+a new bucket while providing a builder API to the user.
+The taken <a href="../../eternity/multi_bucket/struct.CachedLimitedEnums.html"><code>CachedLimitedEnums</code></a> will be given back once <a href="../../eternity/multi_bucket/struct.CachedLimitedEnumsModifier.html#method.build"><code>build</code></a> is
+called.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.LimitedRequests.html" title="eternity::multi_bucket::LimitedRequests struct">LimitedRequests</a></td><td class="docblock-short"><p>This limiter can use a <em>group key</em> for each bucket group and a bucket key
+to get the bucket instance.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.LimitedRequestsModifier.html" title="eternity::multi_bucket::LimitedRequestsModifier struct">LimitedRequestsModifier</a></td><td class="docblock-short"><p>This builder takes ownership of <a href="../../eternity/multi_bucket/struct.LimitedRequests.html"><code>LimitedRequests</code></a> and allows to add
+a new bucket while providing a builder API to the user.
+The taken <a href="../../eternity/multi_bucket/struct.LimitedRequests.html"><code>LimitedRequests</code></a> will be given back once <a href="../../eternity/multi_bucket/struct.LimitedRequestsModifier.html#method.build"><code>build</code></a> is
+called.</p>
+</td></tr></table><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.ToBucket.html" title="eternity::multi_bucket::ToBucket trait">ToBucket</a></td><td class="docblock-short"><p>Creates a bucket using the key.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="eternity" data-search-js="../../search-index.js"></div>
+    <script src="../../main.js"></script></body></html>
