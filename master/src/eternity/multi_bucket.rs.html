@@ -1588,7 +1588,7 @@
         <span class="kw">enum</span> <span class="ident">SpecificRoute</span> {
             <span class="ident">GetUser</span>(<span class="ident">u64</span>),
             <span class="ident">GetAllUsers</span>,
-        };
+        }
 
         <span class="kw">impl</span> <span class="ident">ToBucket</span><span class="op">&lt;</span><span class="ident">SpecificRoute</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SpecificRoute</span> {
             <span class="kw">fn</span> <span class="ident">to_bucket</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Bucket</span><span class="op">&lt;</span><span class="ident">SpecificRoute</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span> {

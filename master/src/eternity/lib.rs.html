@@ -756,7 +756,7 @@
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Hash</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
         <span class="kw">enum</span> <span class="ident">Route</span> {
             <span class="ident">GetUser</span>(<span class="ident">u64</span>),
-        };
+        }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bucket</span>: <span class="ident">Bucket</span><span class="op">&lt;</span><span class="ident">Route</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span>
             <span class="ident">BucketBuilder</span>::<span class="ident">new</span>().<span class="ident">limit</span>(<span class="number">2</span>).<span class="ident">time_span</span>(<span class="number">60</span>).<span class="ident">delay</span>(<span class="number">5</span>).<span class="ident">build</span>();
