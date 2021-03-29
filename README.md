@@ -16,7 +16,6 @@ View the [examples] on how to use this library for these cases.
 A basic limiter for endpoints:
 
 ```rust,no_run
-use eternity::{Bucket, BucketBuilder};
 use eternity::multi_bucket::{CachedLimitedEnums, ToBucket};
 
 #[derive(Hash, PartialEq, Clone, Eq)]
@@ -26,21 +25,12 @@ enum Route {
     GetGuild(u64),
 }
 
-impl ToBucket<Route, String> for Route {
-    fn to_bucket(&self) -> Option<Bucket<Route, String>> {
-        match self {
-            Self::GetUser(_) => Some(BucketBuilder::new()
-                .limit(4)
-                .time_span(10)
-                .build()),
-            _ => None,
-        }
-    }
-}
-
 #[tokio::main]
 async fn main() {
     let mut limiter: CachedLimitedEnums<Route, String> = CachedLimitedEnums::new();
+    limiter.build_group(&Route::GetUser(0)).limit(4).time_span(10).build();
+    limiter.build_group(&Route::GetStats).limit(10).time_span(60).build();
+    limiter.build_group(&Route::GetGuild(0)).limit(1).time_span(60).build();
 
     let result = limiter.cache_or(&Route::GetUser(1), get_user(1));
 }
