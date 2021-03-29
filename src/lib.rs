@@ -363,7 +363,7 @@ mod tests {
         #[derive(Clone, Hash, PartialEq, Eq)]
         enum Route {
             GetUser(u64),
-        };
+        }
 
         let mut bucket: Bucket<Route, String> =
             BucketBuilder::new().limit(2).time_span(60).delay(5).build();

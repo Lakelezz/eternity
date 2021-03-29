@@ -765,7 +765,7 @@ mod tests {
         enum SpecificRoute {
             GetUser(u64),
             GetAllUsers,
-        };
+        }
 
         impl ToBucket<SpecificRoute, String> for SpecificRoute {
             fn to_bucket(&self) -> Option<Bucket<SpecificRoute, String>> {
