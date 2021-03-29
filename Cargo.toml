@@ -1,0 +1,49 @@
+[package]
+name = "eternity"
+version = "0.1.0"
+authors = ["Lakelezz <lakelezz@protonmail.ch>"]
+edition = "2018"
+description = "A Rust library to limit requests and cache results."
+documentation = "https://docs.rs/eternity"
+homepage = "https://github.com/Lakelezz/eternity"
+keywords = ["rate limit", "cache", "async"]
+categories = ["caching", "asynchronous", "data structures", "date and time"]
+license = "ISC"
+readme = "README.md"
+repository = "https://github.com/Lakelezz/eternity.git"
+include = ["src/**/*", "LICENSE.md", "README.md", "CHANGELOG.md"]
+build = "build.rs"
+
+[dependencies.tokio]
+default-features = false
+features = ["time", "sync"]
+version = "1"
+optional = true
+
+[dependencies.tokio_compat]
+package = "tokio"
+default-features = false
+features = ["time", "sync"]
+version = "0.2"
+optional = true
+
+[dev-dependencies.tokio]
+default-features = false
+features = ["macros", "rt", "rt-multi-thread"]
+version = "1"
+
+[build-dependencies]
+skeptic = "0.13"
+
+[dev-dependencies]
+skeptic = "0.13"
+strum = "0.20"
+strum_macros = "0.20"
+
+[features]
+default = ["tokio", "cache"]
+cache = []
+tokio_0_2 = ["tokio_compat"]
+
+[package.metadata.docs.rs]
+all-features = true
