@@ -57,7 +57,7 @@ jobs:
         run: cargo build --all-features
 
       - name: Test All Features
-          if: matrix.toolchain == 'stable'
+          if: runner.toolchain == 'stable'
           run: |
             cargo test --all-features
 
